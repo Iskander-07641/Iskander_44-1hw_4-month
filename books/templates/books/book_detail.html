@@ -1,0 +1,21 @@
+<!-- books/templates/books/book_detail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ book.title }}</title>
+</head>
+<body>
+    <h1>{{ book.title }}</h1>
+    <p><strong>Author:</strong> {{ book.author }}</p>
+    <p><strong>Published Date:</strong> {{ book.published_date }}</p>
+    <p><strong>Genre:</strong> {{ book.get_genre_display }}</p>
+    <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+    <p><strong>Summary:</strong> {{ book.summary }}</p>
+    <p><strong>Pages:</strong> {{ book.pages }}</p>
+    <p><strong>Language:</strong> {{ book.language }}</p>
+    {% if book.cover_image %}
+        <img src="{{ book.cover_image.url }}" alt="Cover Image">
+    {% endif %}
+    <a href="{% url 'book_list' %}">Back to Book List</a>
+</body>
+</html>
