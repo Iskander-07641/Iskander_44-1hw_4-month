@@ -33,6 +33,8 @@
                 <a href="{% url 'book_detail' pk=book.pk %}">{{ book.title }}</a>
                 <p>Author: {{ book.author }}</p>
                 <p>Published Date: {{ book.published_date }}</p>
+                <a href="{% url 'book_update' pk=book.pk %}">Edit</a>
+                <a href="{% url 'book_delete' pk=book.pk %}">Delete</a>
             </li>
         {% endfor %}
     </ul>

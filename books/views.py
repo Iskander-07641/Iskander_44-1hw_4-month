@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from datetime import datetime
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Book
-from .models import Cloth, Tag
+from .forms import BookForm
 
 
 def about_me(request):
@@ -29,16 +29,43 @@ def book_detail(request, pk):
     return render(request, 'books/book_detail.html', {'book': book})
 
 
-def cloth_list(request):
-    tag_filter = request.GET.get('tag')
-
-    if tag_filter:
-        clothes = Cloth.objects.filter(tags__name=tag_filter)
+def book_create(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('book_list')
     else:
-        clothes = Cloth.objects.all()
-
-    tags = Tag.objects.all()
-
-    return render(request, 'clothes/cloth_list.html', {'clothes': clothes, 'tags': tags})
+        form = BookForm()
+    return render(request, 'books/book_form.html', {'form': form})
 
 
+def book__create(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('book_list')
+    else:
+        form = BookForm()
+    return render(request, 'books/book_form.html', {'form': form})
+
+
+def book_update(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('book_list')
+    else:
+        form = BookForm(instance=book)
+    return render(request, 'books/book_form.html', {'form': form})
+
+
+def book_delete(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == 'POST':
+        book.delete()
+        return redirect('book_list')
+    return render(request, 'books/book_confirm_delete.html', {'book': book})

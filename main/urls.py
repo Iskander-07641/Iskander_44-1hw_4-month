@@ -8,4 +8,5 @@ urlpatterns = [
     path('about-friend/', views.about_friend, name='about_friend'),
     path('current-time/', views.current_time, name='current_time'),
     path('books/', include('books.urls')),
+
 ]
