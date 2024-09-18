@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book List</title>
     <style>
         body {
@@ -23,19 +25,46 @@
         a:hover {
             text-decoration: underline;
         }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 5px;
+            width: 200px;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <h1>Book List</h1>
+
+    <!-- Форма поиска -->
+    <form method="GET" action="{% url 'book_list' %}">
+        <input type="text" name="q" placeholder="Поиск книги" value="{{ request.GET.q }}">
+        <button type="submit">Поиск</button>
+    </form>
+
+    <!-- Список книг -->
     <ul>
         {% for book in books %}
             <li>
                 <a href="{% url 'book_detail' pk=book.pk %}">{{ book.title }}</a>
                 <p>Author: {{ book.author }}</p>
                 <p>Published Date: {{ book.published_date }}</p>
-                <a href="{% url 'book_update' pk=book.pk %}">Edit</a>
+                <a href="{% url 'book_update' pk=book.pk %}">Edit</a> |
                 <a href="{% url 'book_delete' pk=book.pk %}">Delete</a>
             </li>
+        {% empty %}
+            <li>Ничего не найдено по запросу.</li>
         {% endfor %}
     </ul>
 </body>

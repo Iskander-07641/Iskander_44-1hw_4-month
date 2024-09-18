@@ -1,12 +1,13 @@
-from django.contrib import admin
-from django.urls import path, include
-from books import views
+from books.views import AboutMeView, AboutFriendView, CurrentTimeView, BookListView, BookDetailView, BookCreateView, BookUpdateView, BookDeleteView
+from django.urls import path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('about-me/', views.about_me, name='about_me'),
-    path('about-friend/', views.about_friend, name='about_friend'),
-    path('current-time/', views.current_time, name='current_time'),
-    path('books/', include('books.urls')),
-
+    path('about-me/', AboutMeView.as_view(), name='about_me'),
+    path('about-friend/', AboutFriendView.as_view(), name='about_friend'),
+    path('current-time/', CurrentTimeView.as_view(), name='current_time'),
+    path('', BookListView.as_view(), name='book_list'),
+    path('<int:pk>/', BookDetailView.as_view(), name='book_detail'),
+    path('create/', BookCreateView.as_view(), name='book_create'),
+    path('update/<int:pk>/', BookUpdateView.as_view(), name='book_update'),
+    path('delete/<int:pk>/', BookDeleteView.as_view(), name='book_delete'),
 ]
