@@ -29,7 +29,6 @@ class Book(models.Model):
 
 
 class Tag(models.Model):
-    objects = None
     name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
@@ -37,7 +36,6 @@ class Tag(models.Model):
 
 
 class Cloth(models.Model):
-    objects = None
     name = models.CharField(max_length=255)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
