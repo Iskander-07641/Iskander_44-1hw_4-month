@@ -1,0 +1,6 @@
+<h1>Результаты парсинга</h1>
+<ul>
+    {% for movie in movies %}
+        <li>{{ movie.title }} ({{ movie.year }}) - {{ movie.genre }} - Рейтинг: {{ movie.rating }}</li>
+    {% endfor %}
+</ul>
